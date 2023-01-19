@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body %}
+<h1> {{ user.get_role }} dashboard</h1>
+  {{ user.username }}
+
+  {% include "layout/alarts.html" %}
+{% endblock body %}
