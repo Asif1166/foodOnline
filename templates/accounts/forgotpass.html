@@ -10,11 +10,11 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                     <div class="user-dashboard loader-holder">
                         <div class="user-holder">
-                    <h4 class="text-center" style="margin-bottom: 0;">WELCOME TO FOODONLINE</h4>
-                    <p class="text-center">Please fill this form to get yourself onboarded in the foodOnline marketplace.</p>
+                    <h4 class="text-center" style="margin-bottom: 0;">Forgot Pass?</h4>
+                    <p class="text-center">Enter Your email</p>
                     <hr>
                     <div id="restaurant-sets-holder">
-                        <form  class="form-fields-set foodbakery-dev-restaurant-form" method="POST" action="{% url 'login' %}">
+                        <form  class="form-fields-set foodbakery-dev-restaurant-form" method="POST" action="{% url 'forgot_pass' %}">
                             {% csrf_token %}
                             <ul class="register-add-restaurant-tab-container restaurant-information-tab-container">
                                 <li>
@@ -33,16 +33,7 @@
                                                         
                                                     </li>
                                                     
-                                                    <li>
-                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                            <div class="field-holder">
-                                                                <label>Password</label>
-                                                                <input type="password" name="password" placeholder="Enter password">
-                                                                
-                                                            </div>
-                                                        </div>
-                                                       
-                                                    </li>
+                                                    
                                                 </ul>
                                             </div>
                                         </div>
@@ -54,9 +45,7 @@
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="field-holder">
                                                 <div class="payment-holder">
-                                                    <input type="submit" value="LOGIN" id="btn-next-restaurant-information" class="bgcolor">
-
-                                                    <a class="float-right" href="{% url 'forgot_pass' %}">Forgot Password?</a>
+                                                    <input type="submit" value="CONTINUE" id="btn-next-restaurant-information" class="bgcolor">
                                                 </div>
                                             </div>
                                         </div>
