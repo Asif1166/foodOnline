@@ -4,57 +4,17 @@
 		<!-- Header Start -->
 		<header id="header">
 			<div class="main-header">
-				<div class="container">
+				<div class="container-fluid">
 					<div class="row">
 						<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
 							<div class="logo">
 								<figure>
-									<a href="index.html" class="light-logo">
+									<a href="{% url 'home' %}" class="light-logo">
 										<img src="{% static 'assets/extra-images/main-logo.png' %}" alt="FoodBakery">
 									</a>
 								</figure>
 							</div>
-							<div class="main-nav">
-									<nav id="site-navigation" class="main-navigation">
-										<ul>
-											<li>
-												<a href="#">Demos</a>
-												<ul>
-													<li><a href="index.html">Food Bakery</a></li>
-													<li><a href="mexican-restaurant.html">Mexican Restaurant</a></li>
-													<li><a href="foodstop.html">Food Stop</a></li>
-													<li><a href="rtl.html">Rtl Demo</a></li>
-													<li><a href="food-cout.html">Food Court</a></li>
-													<li><a href="single-restaurant.html">Single Restaurant Demo</a></li>
-												</ul>
-												<!--End Sub Menu -->
-											</li>
-											<li><a href="listings.html">Restaurants</a></li>
-											<li>
-												<a href="#">Pages</a>
-												<ul>
-													<li><a href="price-plans.html">Price Plans</a></li>
-													<li><a href="how-it-works.html">How it works</a></li>
-													<li><a href="faq.html">FAQ’s</a></li>
-													<li><a href="404.html">404</a></li>
-													<li><a href="search-result.html">Search Result</a></li>
-													<li><a href="contact-us.html">Contact</a></li>
-												</ul>
-												<!--End Sub Menu -->
-											</li>
-											<li>
-												<a href="#">Blogs</a>
-												<ul>
-													<li><a href="blog-large.html">Blog Large</a></li>
-													<li><a href="blog-medium.html">Blog Medium</a></li>
-													<li><a href="blog-masonry.html">Blog Masonry</a></li>
-													<li><a href="blog-detail.html">Blog Detail Page</a></li>
-												</ul>
-												<!--End Sub Menu -->
-											</li>
-										</ul>
-									</nav><!-- .main-navigation -->
-								</div>
+							
 							
 							<div class="main-location">
 								<ul>
@@ -67,12 +27,25 @@
 									</li>
 								</ul>
 								</div>
+								
+								<a href="{% url 'marketplace' %}" class="btn btn-outline-danger text-uppercase font-weight-bold">Marketplace</a>
+								
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 							<div class="login-option">
+								
 								{% if user.is_authenticated %}
 								<a class="cs-color cs-popup-joinus-btn login-popup"   href="{% url 'myAccount' %}">My account </a>
 								<a class="cs-color cs-popup-joinus-btn login-popup text-danger"   href="{% url 'logout' %}">Logout </a>
+
+
+
+								&nbsp;
+									<a href="{% url 'cart' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class=" text-danger" viewBox="0 0 16 16">
+										<path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+									  </svg>
+									  <span class="badge badge-warning" id="cart_counter">{{ cart_count }}</span>
+									</a>
 								{% else %}
 								  
 								
@@ -84,6 +57,7 @@
 									Restaurant </a>
 
 									{% endif %}
+									
 							</div>
 						</div>
 					</div>

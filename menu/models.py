@@ -24,7 +24,7 @@ class Category(models.Model):
     
 class FoodItem(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='fooditems')
     food_title = models.CharField(max_length=50)
     slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField(max_length=250, blank=True)
@@ -33,6 +33,9 @@ class FoodItem(models.Model):
     is_available = models.BooleanField(default=True)
     created_at =models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    def clean(self):
+        self.food_title = self.food_title.capitalize()
     
     def __str__(self):
         return self.food_title

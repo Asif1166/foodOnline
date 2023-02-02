@@ -6,7 +6,7 @@ autocomplete = new google.maps.places.Autocomplete(
     {
         types: ['geocode', 'establishment'],
         //default in this app is "IN" - add your country code
-        componentRestrictions: {'country': ['in']},
+        componentRestrictions: {'country': ['bd']},
     })
 // function to specify what should happen when the prediction is clicked
 autocomplete.addListener('place_changed', onPlaceChanged);
@@ -61,3 +61,119 @@ function onPlaceChanged (){
         }
     }
 }
+
+$(document).ready(function(){
+    $('.add_to_cart').on('click', function(e){
+        e.preventDefault();
+        
+        food_id = $(this).attr('data-id');
+        url = $(this).attr('data-url');
+
+        
+        $.ajax({
+            type: 'GET',
+            url: url,
+            
+            success: function(response){
+                console.log(response)
+                $('#cart_counter').html(response.cart_counter['cart_count'])
+                $('#qty-'+food_id).html(response.qty)
+
+                applyCartAmounts(
+                    response.cart_amount['subtotal'],
+                    response.cart_amount['tax'],
+                    response.cart_amount['grand_total'],
+                )
+
+
+            }
+        })
+    })
+    //place the cart item quantity on load
+
+    $('.item_qty').each(function(){
+        var the_id = $(this).attr('id')
+        var qty = $(this).attr('data-qty')
+        $('#'+the_id).html(qty)
+    })
+
+    
+    $('.decrease_cart').on('click', function(e){
+        e.preventDefault();
+            
+        food_id = $(this).attr('data-id');
+        url = $(this).attr('data-url');
+        cart_id = $(this).attr('id');
+    
+            
+        $.ajax({
+            type: 'GET',
+            url: url,
+                
+            success: function(response){
+                console.log(response)
+                $('#cart_counter').html(response.cart_counter['cart_count'])
+                $('#qty-'+food_id).html(response.qty)
+                removerCartItem(response.qty, cart_id);
+
+                applyCartAmounts(
+                    response.cart_amount['subtotal'],
+                    response.cart_amount['tax'],
+                    response.cart_amount['grand_total'],
+                )
+            }
+        })
+    })
+
+    // delete cart item
+
+    $('.delete_cart').on('click', function(e){
+        e.preventDefault();
+
+        
+        
+        food_id = $(this).attr('data-id');
+        url = $(this).attr('data-url');
+
+        
+        $.ajax({
+            type: 'GET',
+            url: url,
+            
+            success: function(response){
+                console.log(response)
+                if(response.status == 'failed'){
+                    swal(response.message,'','error')
+                }else{
+                    $('#cart_counter').html(response.cart_counter['cart_count'])
+                    $('#qty-'+food_id).html(response.qty)
+                    removerCartItem(0, cart_id);
+                }
+                
+                
+                
+            }
+        })
+    })
+
+    function removerCartItem(cartItemQty, cart_id){
+        if(cartItemQty <= 0){
+            document.getElementById('cart-item-'+cart_id).remove()
+        }
+    }
+
+    function applyCartAmounts(subtotal, tax, grand_total){
+        if(window.location.pathname == '/cart/'){
+            $('#subtotal').html(subtotal)
+            $('#tax').html(tax)
+            $('#total').html(grand_total)
+
+        }
+        
+    }
+
+});
+
+
+
+
