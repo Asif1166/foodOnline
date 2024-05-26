@@ -132,7 +132,7 @@ $(document).ready(function(){
 
         
         
-        food_id = $(this).attr('data-id');
+        cart_id = $(this).attr('data-id');
         url = $(this).attr('data-url');
 
         

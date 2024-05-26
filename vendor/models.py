@@ -33,3 +33,16 @@ class Vendor(models.Model):
                     mail_subject = 'We are sorry! You are not eligible for publishing Your food menu on our marketplace.'
                     send_notification(mail_subject, mail_template, context)
         return super(Vendor, self).save(*args, **kwargs)
+    
+DAYS=[
+    (1, ('Saturday')),
+    (2, ('Sunday')),
+    (3, ('Monday')),
+    (4, ('Tuesday')),
+    (5, ('Wednesday')),
+    (6, ('Thursday')),
+    (7, ('Friday')),
+]
+
+class OpeningHour(models.Model):
+    pass

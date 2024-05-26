@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'vendor',
     'menu',
     'marketplace',
+    'customers',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -68,7 +70,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'accounts.context_processors.get_vendor',
+                'accounts.context_processors.get_user_profile',
                 'accounts.context_processors.get_google_api',
+                'accounts.context_processors.get_paypal_client_id',
                 'marketplace.context_processors.get_cart_counter',
                 'marketplace.context_processors.get_cart_amounts',
                 
@@ -84,14 +88,22 @@ WSGI_APPLICATION = 'foodonline_main.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'foodOnline_db',
+#         'USER': 'postgres',
+#         'PASSWORD': '1234',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'foodOnline_db',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -158,4 +170,8 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAILS ='foodonline Marketplasce <asifraha1166@gmail.com>'
 
 
-GOOGLE_API_KEY = 'AIzaSyC4yTudrg9pTcB2khAgrbCMBfVvbviOhVU'
+GOOGLE_API_KEY = 'AIzaSyCQFmIcv1UDUvSjkQPpf-Chmidin9fZRbk'
+
+PAYPAL_CLIENT_ID = 'AQWf_19CXPPG_Te9rKDXcQoJN6aKsgCr1aMEa1O8wt6Sbjc9ZPE1ozOueSHa5U49gxTw2cocOeIIYFgh'
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'

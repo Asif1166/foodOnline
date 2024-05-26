@@ -6,6 +6,9 @@ from django.http import JsonResponse
 from .models import Cart
 from .context_processors import get_cart_counter, get_cart_amounts
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.db.models import Q
+from orders.forms import OrderForm
+from accounts.models import UserProfile
 
 # Create your views here.
 def marketplace(request):
@@ -95,7 +98,7 @@ def decrease_cart(request, food_id):
 def cart(request):
     cart_items = Cart.objects.filter(user=request.user).order_by('created_at')
     context = {
-        'cart_items':cart_items
+        'cart_items':cart_items,
     }
     return render(request, 'marketplace/cart.html', context)
 
@@ -106,3 +109,51 @@ def delete_cart(request, pk=None):
     
     
     return redirect('cart')
+
+def search(request):
+    address = request.GET['address']
+    latitude = request.GET['lat']
+    longitude = request.GET['lng']
+    redius = request.GET['redius']
+    r_name = request.GET['rest_name']
+    
+    fetch_vendors_by_fooditems = FoodItem.objects.filter(food_title__icontains=r_name, is_available=True).values_list('vendor', flat=True)
+    vendors = Vendor.objects.filter(Q(id__in = fetch_vendors_by_fooditems) | Q(vendor_name__icontains=r_name, is_approved=True, user__is_active=True))
+    
+    vendor_count = vendors.count()
+    context = {
+        'vendors':vendors,
+        'vendor_count': vendor_count,
+    }
+    
+    return render(request, 'marketplace/listings.html', context)
+
+@login_required(login_url='login')
+def checkout(request):
+    cart_items = Cart.objects.filter(user= request.user).order_by('created_at')
+    cart_count = cart_items.count()
+    if cart_count <= 0:
+        return redirect('marketplace')
+    
+    user_profile = UserProfile.objects.get(user=request.user)
+    default_values = {
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+        'phone': request.user.phone_number,
+        'email': request.user.email,
+        'address': user_profile.address,
+        'country': user_profile.country,
+        'state': user_profile.state,
+        'city': user_profile.city,
+        'pin_code': user_profile.pin_code,
+    }
+    
+    form = OrderForm(initial=default_values)
+    context = {
+        'form': form,
+        'cart_items': cart_items,
+    }
+    return render(request, 'marketplace/checkout.html', context)
+
+
+    
